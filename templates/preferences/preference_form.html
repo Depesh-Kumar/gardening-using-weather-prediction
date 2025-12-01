@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Preferences{% endblock %}
+
+{% block content %}
+  <h1>Cookie Preferences</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <button type="submit">Save Preferences</button>
+  </form>
+
+  <p>Current theme: <strong>{{ user_theme }}</strong></p>
+  <p>Current language: <strong>{{ user_language }}</strong></p>
+{% endblock %}

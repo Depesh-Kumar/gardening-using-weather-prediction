@@ -1,0 +1,27 @@
+/* Use data-theme attribute on body to apply light/dark */
+:root {
+  --bg: #ffffff;
+  --fg: #222222;
+  --link: #1a73e8;
+}
+
+body[data-theme="dark"] {
+  --bg: #0e0e12;
+  --fg: #e6e6e6;
+  --link: #8ab4f8;
+}
+
+/* Apply variables */
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+a { color: var(--link); }
+
+/* small form styling */
+form { max-width: 500px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px; }
+button { padding: 0.5rem 1rem; margin-top: .5rem; border: none; border-radius: 6px; cursor: pointer; }

@@ -1,0 +1,200 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Gardening Tips & Weather{% endblock %}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    header nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+    
+    header nav a:hover {
+      opacity: 0.8;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .card h2 {
+      color: #2d5016;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #4a7c2c;
+      padding-bottom: 0.5rem;
+    }
+    
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .weather-item {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #a5d6a7;
+    }
+    
+    .weather-item strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2d5016;
+    }
+    
+    .temperature {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1b5e20;
+      margin: 0.5rem 0;
+    }
+    
+    .condition {
+      font-size: 0.9rem;
+      color: #558b2f;
+    }
+    
+    .tips-item {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #f1f8e9;
+      border-left: 4px solid #4a7c2c;
+      border-radius: 4px;
+    }
+    
+    .tips-item h3 {
+      color: #2d5016;
+      margin-bottom: 0.5rem;
+    }
+    
+    .tips-item a {
+      color: #4a7c2c;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .tips-item a:hover {
+      text-decoration: underline;
+    }
+    
+    .tip-details {
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+    
+    button, a.btn {
+      display: inline-block;
+      background-color: #4a7c2c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover, a.btn:hover {
+      background-color: #2d5016;
+    }
+    
+    .season-badge {
+      display: inline-block;
+      background-color: #4a7c2c;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+    
+    footer {
+      background-color: #2d5016;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <nav>
+      <strong style="font-size: 1.5rem;">🌱 Garden & Weather</strong>
+      <a href="{% url 'gardening:home' %}">Home</a>
+      <a href="{% url 'gardening:weather_forecast' %}">Weather</a>
+      <a href="{% url 'gardening:tips_list' %}">Tips</a>
+      <a href="{% url 'preferences:preference_form' %}">Preferences</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Gardening Tips & Weather Forecast. Grow with us! 🌿</p>
+  </footer>
+</body>
+</html>

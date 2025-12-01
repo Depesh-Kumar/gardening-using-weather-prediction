@@ -1,0 +1,76 @@
+{% extends "gardening_base.html" %}
+
+{% block title %}{{ tip.title }} - Gardening Tips & Weather{% endblock %}
+
+{% block content %}
+{% if tip %}
+  <div class="card" style="margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h1>{{ tip.title }}</h1>
+      <span class="season-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">{{ tip.get_season_display }}</span>
+    </div>
+    <p style="color: #666; font-size: 1.1rem;">{{ tip.description }}</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+    <!-- Best Plants -->
+    <div class="card">
+      <h3 style="color: #2d5016; margin-bottom: 1rem;">🌿 Best Plants for {{ tip.get_season_display }}</h3>
+      <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 1.5rem; border-radius: 8px;">
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #1b5e20;">
+          {% for plant in tip.best_plants|add:'' %}<span style="display: inline-block; background: white; padding: 0.5rem 1rem; margin: 0.25rem; border-radius: 20px; border: 2px solid #4a7c2c;">{{ plant|add:'' }}</span>{% endfor %}
+        </p>
+      </div>
+    </div>
+
+    <!-- Season Info -->
+    <div class="card">
+      <h3 style="color: #2d5016; margin-bottom: 1rem;">📅 Season Information</h3>
+      <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 1.5rem; border-radius: 8px;">
+        {% if tip.season == 'spring' %}
+          <p><strong>🌱 Months:</strong> March, April, May</p>
+          <p><strong>🌡️ Temperature:</strong> 10-20°C</p>
+          <p><strong>💧 Rainfall:</strong> Moderate to High</p>
+        {% elif tip.season == 'summer' %}
+          <p><strong>☀️ Months:</strong> June, July, August</p>
+          <p><strong>🌡️ Temperature:</strong> 20-30°C</p>
+          <p><strong>💧 Rainfall:</strong> Variable</p>
+        {% elif tip.season == 'fall' %}
+          <p><strong>🍂 Months:</strong> September, October, November</p>
+          <p><strong>🌡️ Temperature:</strong> 10-20°C</p>
+          <p><strong>💧 Rainfall:</strong> Moderate</p>
+        {% else %}
+          <p><strong>❄️ Months:</strong> December, January, February</p>
+          <p><strong>🌡️ Temperature:</strong> 0-10°C</p>
+          <p><strong>💧 Rainfall:</strong> Low to Moderate</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Tips -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <h2 style="color: #2d5016; margin-bottom: 1rem;">💡 Detailed Gardening Tips</h2>
+    <div style="background-color: #fff9e6; padding: 1.5rem; border-left: 4px solid #ffc107; border-radius: 4px; line-height: 1.8;">
+      <div class="tip-details" style="white-space: pre-wrap; font-size: 1rem; color: #333;">{{ tip.tips }}</div>
+    </div>
+  </div>
+
+  <!-- Related Tips -->
+  <div class="card">
+    <h3 style="color: #2d5016; margin-bottom: 1rem;">Related Resources</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+      <a class="btn" href="{% url 'gardening:tips_list' %}">← All Tips</a>
+      <a class="btn" href="{% url 'gardening:weather_forecast' %}">📊 Weather Forecast</a>
+      <a class="btn" href="{% url 'gardening:home' %}">🏠 Home</a>
+    </div>
+  </div>
+
+{% else %}
+  <div class="card" style="text-align: center; padding: 2rem;">
+    <h2 style="color: #d32f2f; margin-bottom: 1rem;">Tip Not Found</h2>
+    <p style="margin-bottom: 1.5rem;">Sorry, the gardening tip you're looking for doesn't exist.</p>
+    <a class="btn" href="{% url 'gardening:tips_list' %}">← Back to All Tips</a>
+  </div>
+{% endif %}
+{% endblock %}

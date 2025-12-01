@@ -1,0 +1,69 @@
+{% extends "gardening_base.html" %}
+
+{% block title %}Gardening Tips & Weather - Home{% endblock %}
+
+{% block content %}
+<h1>🌿 Gardening Tips & Weather Forecast</h1>
+<p style="font-size: 1.1rem; margin-bottom: 2rem; color: #666;">Your personal guide to gardening success with daily weather insights for {{ season|upper }} season.</p>
+
+<div class="container">
+  <!-- Current Weather Card -->
+  <div class="card">
+    <h2>📍 Current Weather</h2>
+    {% if current_weather %}
+      <div style="text-align: center; padding: 1rem;">
+        <div class="temperature">{{ current_weather.temperature }}°C</div>
+        <div class="condition">{{ current_weather.condition }}</div>
+        <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+          <p>💧 Humidity: {{ current_weather.humidity }}%</p>
+          <p>💨 Wind: {{ current_weather.wind_speed }} km/h</p>
+          <p>☀️ UV Index: {{ current_weather.uv_index }}</p>
+        </div>
+      </div>
+    {% else %}
+      <p>No current weather data available.</p>
+    {% endif %}
+  </div>
+
+  <!-- 7-Day Forecast Card -->
+  <div class="card">
+    <h2>📅 7-Day Forecast</h2>
+    <div class="weather-grid">
+      {% for forecast in forecast %}
+        <div class="weather-item">
+          <strong>{{ forecast.day_of_week }}</strong>
+          <div class="temperature">{{ forecast.temperature }}°C</div>
+          <div class="condition">{{ forecast.condition }}</div>
+        </div>
+      {% empty %}
+        <p>No forecast data available.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Seasonal Gardening Tips -->
+<div class="card">
+  <h2>🌱 {{ season|upper }} Gardening Tips</h2>
+  <p style="margin-bottom: 1rem; color: #666;">Advice tailored for the {{ season }} season:</p>
+  
+  {% for tip in tips %}
+    <div class="tips-item">
+      <h3>{{ tip.title }}</h3>
+      <p><strong>Best Plants:</strong> {{ tip.best_plants }}</p>
+      <div class="tip-details">{{ tip.tips }}</div>
+      <p style="margin-top: 1rem;">
+        <a class="btn" href="{% url 'gardening:tips_list' %}">View All Tips</a>
+      </p>
+    </div>
+  {% empty %}
+    <p>No tips available for this season.</p>
+  {% endfor %}
+</div>
+
+<!-- Quick Links -->
+<div style="text-align: center; margin-top: 2rem;">
+  <a class="btn" href="{% url 'gardening:weather_forecast' %}" style="margin-right: 1rem;">📊 Detailed Weather Forecast</a>
+  <a class="btn" href="{% url 'gardening:tips_list' %}">📚 Browse All Tips</a>
+</div>
+{% endblock %}

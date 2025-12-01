@@ -1,0 +1,85 @@
+{% extends "gardening_base.html" %}
+
+{% block title %}Gardening Tips - Gardening Tips & Weather{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 2rem;">
+  <h1>📚 Gardening Tips by Season</h1>
+  <p style="color: #666; margin-top: 0.5rem;">Expert advice for gardening throughout all seasons.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+  {% for tip in tips %}
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+        <h3 style="color: #2d5016; margin: 0;">{{ tip.title }}</h3>
+        <span class="season-badge">{{ tip.get_season_display }}</span>
+      </div>
+      
+      <p style="color: #666; margin-bottom: 1rem;">{{ tip.description }}</p>
+      
+      <div style="background-color: #f1f8e9; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+        <strong style="color: #2d5016;">🌿 Best Plants for {{ tip.get_season_display }}:</strong>
+        <p style="margin-top: 0.5rem; color: #558b2f;">{{ tip.best_plants }}</p>
+      </div>
+      
+      <div style="background-color: #fff9e6; padding: 1rem; border-left: 4px solid #ffc107; border-radius: 4px; margin-bottom: 1rem;">
+        <strong style="color: #f57f17;">💡 Key Tips:</strong>
+        <div class="tip-details">{{ tip.tips }}</div>
+      </div>
+      
+      {% if tip.id %}
+        <a class="btn" href="{% url 'gardening:tip_detail' tip.id %}">View Details →</a>
+      {% endif %}
+    </div>
+  {% empty %}
+    <div class="card" style="grid-column: 1 / -1;">
+      <p>No gardening tips available.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Seasonal Guide -->
+<div class="card" style="margin-top: 3rem;">
+  <h2>🌍 Seasonal Gardening Calendar</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+    <div style="padding: 1rem; background: linear-gradient(135deg, #d4f1d4 0%, #a5d6a7 100%); border-radius: 8px;">
+      <h4 style="color: #1b5e20; margin-bottom: 0.5rem;">🌱 Spring (Mar-May)</h4>
+      <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+        <li>✓ Start seeds indoors</li>
+        <li>✓ Prepare garden beds</li>
+        <li>✓ Plant cool-season crops</li>
+      </ul>
+    </div>
+    <div style="padding: 1rem; background: linear-gradient(135deg, #fff9e6 0%, #ffe082 100%); border-radius: 8px;">
+      <h4 style="color: #f57f17; margin-bottom: 0.5rem;">☀️ Summer (Jun-Aug)</h4>
+      <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+        <li>✓ Water frequently</li>
+        <li>✓ Mulch beds</li>
+        <li>✓ Deadhead flowers</li>
+      </ul>
+    </div>
+    <div style="padding: 1rem; background: linear-gradient(135deg, #ffe0b2 0%, #ffb74d 100%); border-radius: 8px;">
+      <h4 style="color: #e65100; margin-bottom: 0.5rem;">🍂 Fall (Sep-Nov)</h4>
+      <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+        <li>✓ Plant bulbs</li>
+        <li>✓ Harvest crops</li>
+        <li>✓ Divide perennials</li>
+      </ul>
+    </div>
+    <div style="padding: 1rem; background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%); border-radius: 8px;">
+      <h4 style="color: #424242; margin-bottom: 0.5rem;">❄️ Winter (Dec-Feb)</h4>
+      <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+        <li>✓ Protect plants</li>
+        <li>✓ Plan next year</li>
+        <li>✓ Maintain tools</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+  <a class="btn" href="{% url 'gardening:home' %}">← Back to Home</a>
+  <a class="btn" href="{% url 'gardening:weather_forecast' %}" style="margin-left: 1rem;">📊 View Weather Forecast</a>
+</div>
+{% endblock %}

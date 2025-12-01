@@ -1,0 +1,22 @@
+<!doctype html>
+{% load static %}
+<html lang="{{ user_language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}My Site{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/prefs.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body data-theme="{{ user_theme }}">
+  <header>
+    <nav>
+      <a href="{% url 'preferences:preference_form' %}">Preferences</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

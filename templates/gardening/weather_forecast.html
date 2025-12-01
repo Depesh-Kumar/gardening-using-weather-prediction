@@ -1,0 +1,70 @@
+{% extends "gardening_base.html" %}
+
+{% block title %}Weather Forecast - Gardening Tips & Weather{% endblock %}
+
+{% block content %}
+<div class="card" style="margin-bottom: 2rem;">
+  <h1>📊 7-Day Weather Forecast</h1>
+  <p style="color: #666; margin-top: 0.5rem;">Detailed weather predictions to help you plan your gardening activities.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+  {% for forecast in forecasts %}
+    <div class="card">
+      <h3 style="color: #2d5016; margin-bottom: 1rem;">{{ forecast.day_of_week }} - {{ forecast.date }}</h3>
+      
+      <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+        <div style="font-size: 2rem; font-weight: bold; color: #1b5e20;">{{ forecast.temperature }}°C</div>
+        <div style="font-size: 1.1rem; color: #558b2f; margin-top: 0.5rem;">{{ forecast.condition }}</div>
+      </div>
+      
+      <div style="background-color: #f1f8e9; padding: 1rem; border-radius: 4px;">
+        <p><strong>💧 Humidity:</strong> {{ forecast.humidity }}%</p>
+        <p><strong>💨 Wind Speed:</strong> {{ forecast.wind_speed }} km/h</p>
+        <p><strong>☀️ UV Index:</strong> {{ forecast.uv_index }}</p>
+      </div>
+      
+      <!-- Gardening Tips Based on Weather -->
+      <div style="margin-top: 1rem; padding: 0.75rem; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; font-size: 0.9rem;">
+        {% if forecast.condition_code == 'rainy' or forecast.condition|lower == 'rainy' %}
+          <strong>💧 Rainy Day Tips:</strong> Perfect day for planting! Water retention will be excellent.
+        {% elif forecast.temperature|add:0 > 25 %}
+          <strong>☀️ Hot Day Tips:</strong> Water plants deeply in the morning or evening. Use mulch to retain moisture.
+        {% elif forecast.temperature|add:0 < 10 %}
+          <strong>❄️ Cold Day Tips:</strong> Protect tender plants with frost cloth. Hold off on watering.
+        {% else %}
+          <strong>✅ Ideal Day:</strong> Great day for outdoor gardening work and planting!
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="card" style="grid-column: 1 / -1;">
+      <p>No forecast data available.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Weather Legend -->
+<div class="card" style="margin-top: 2rem;">
+  <h3>📋 Weather Conditions Guide</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+    <div style="padding: 1rem; background-color: #e3f2fd; border-radius: 4px;">
+      <strong>☀️ Sunny</strong> - Ideal for most plants. Ensure adequate watering.
+    </div>
+    <div style="padding: 1rem; background-color: #f3e5f5; border-radius: 4px;">
+      <strong>☁️ Cloudy</strong> - Good for sensitive plants. Reduced water needs.
+    </div>
+    <div style="padding: 1rem; background-color: #e0f2f1; border-radius: 4px;">
+      <strong>🌧️ Rainy</strong> - Best for planting. Excellent soil hydration.
+    </div>
+    <div style="padding: 1rem; background-color: #f1f8e9; border-radius: 4px;">
+      <strong>🌤️ Partly Cloudy</strong> - Balanced conditions. Moderate watering.
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+  <a class="btn" href="{% url 'gardening:home' %}">← Back to Home</a>
+  <a class="btn" href="{% url 'gardening:tips_list' %}" style="margin-left: 1rem;">📚 View Gardening Tips</a>
+</div>
+{% endblock %}
